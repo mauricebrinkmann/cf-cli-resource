@@ -47,6 +47,8 @@ if [ -z "$params" ]; then
 fi
 
 api=$(get_config '.source.api')
+api_hostname=$(get_config '.source.api_hostname')
+api_ip=$(get_config '.source.api_ip')
 skip_cert_check=$(get_config '.source.skip_cert_check' 'false')
 username=$(get_config '.source.username')
 password=$(get_config '.source.password')
@@ -60,6 +62,25 @@ command_file=$(get_config '.params.command_file')
 cf_color=$(get_config '.source.cf_color') && [ -n "$cf_color" ] && export CF_COLOR=$cf_color
 cf_dial_timeout=$(get_config '.source.cf_dial_timeout') && [ -n "$cf_dial_timeout" ] && export CF_DIAL_TIMEOUT=$cf_dial_timeout
 cf_trace=$(get_config '.source.cf_trace') && echo "$cf_trace" | grep -qi 'true' && export CF_TRACE=true
+
+if [ -n "$api_hostname" ] && [ -n "$api_ip" ]; then
+  echo "$api_ip $api_hostname">>/etc/hosts
+  if [ $? -ne 0 ]; then
+    logger::error "could not add '$api_ip $api_hostname' to /etc/hosts (check api_ip and api_hostname parameters)"
+    exit E_PREPARATION_WENT_TO_HELL
+  fi
+else
+  if [ -n "$api_hostname" ]; then
+    # just api_ip was missing
+    logger::error "could not add 'api_ip $api_hostname' to /etc/hosts (missing api_ip parameter)"
+    exit E_PREPARATION_WENT_TO_HELL
+  fi
+  if [ -n "$api_ip" ]; then
+    # just api_hostname was missing
+    logger::error "could not add '$api_ip api_hostname' to /etc/hosts (missing api_hostname parameter)"
+    exit E_PREPARATION_WENT_TO_HELL
+  fi
+fi
 
 cf_home=$(get_config '.params.cf_home')
 if [ -n "$cf_home" ]; then
