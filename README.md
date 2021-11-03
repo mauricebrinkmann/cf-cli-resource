@@ -1,15 +1,15 @@
 # cf cli Concourse Resource
 
-[![CI Builds](https://ci.nulldriver.com/api/v1/teams/resources/pipelines/cf-cli-resource/jobs/build/badge)](https://ci.nulldriver.com/teams/resources/pipelines/cf-cli-resource)
-[![Docker Pulls](https://img.shields.io/docker/pulls/nulldriver/cf-cli-resource.svg)](https://hub.docker.com/r/nulldriver/cf-cli-resource/)
-
 An output only resource capable of running lots of Cloud Foundry cli commands.
+With the addition not to rely upon working DNS records.
 
 ## Source Configuration
 
 Note: you must provide either `username` and `password` or `client_id` and `client_secret`.
 
 - `api`: _Required._ The address of the Cloud Controller in the Cloud Foundry deployment.
+- `api_hostname`: _Optional._ The hostname of the Cloud Controller in the Cloud Foundry deployment.
+- `api_ip`: _Optional._ The IP address of the Cloud Controller in the Cloud Foundry deployment.
 - `username`: _Optional._ The username used to authenticate.
 - `password`: _Optional._ The password used to authenticate.
 - `origin`: _Optional._ The identity provider to be used for authentication (only valid for `username` & `password` authentication)
@@ -27,7 +27,7 @@ resource_types:
   - name: cf-cli-resource
     type: registry-image
     source:
-      repository: nulldriver/cf-cli-resource
+      repository: mauricebrinkmann/cf-cli-resource
       tag: latest
 
 resources:
@@ -35,6 +35,8 @@ resources:
     type: cf-cli-resource
     source:
       api: https://api.local.pcfdev.io
+      api_hostname: api.local.pcfdev.io
+      api_ip: 127.0.0.1
       username: admin
       password: admin
       skip_cert_check: true
