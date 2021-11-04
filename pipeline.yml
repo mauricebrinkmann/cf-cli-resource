@@ -722,7 +722,7 @@ jobs:
     params:
       message: |
         New release announcement!
-        https://github.com/nulldriver/cf-cli-resource/releases/tag/v((.:version-number))
+        https://github.com/mauricebrinkmann/cf-cli-resource/releases/tag/v((.:version-number))
       mode: concise
       alert_type: success
 

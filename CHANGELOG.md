@@ -173,8 +173,7 @@ This release introduces some major changes to the project structure. The `cf-cli
 
 ### Added
 
-- Added a [README](examples/README.md) for example pipelines.
-- Added [example pipeline](examples/cf_home-auth/pipeline.yml) for `cf_home` usage.
+- N/A
 
 ### Fixed
 
