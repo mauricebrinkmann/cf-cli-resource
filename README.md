@@ -1,15 +1,16 @@
 # cf cli Concourse Resource
 
 An output only resource capable of running lots of Cloud Foundry cli commands.
-With the addition not to rely upon working DNS records.
+
+**With the addition not to rely upon working DNS servers.**
 
 ## Source Configuration
 
 Note: you must provide either `username` and `password` or `client_id` and `client_secret`.
 
 - `api`: _Required._ The address of the Cloud Controller in the Cloud Foundry deployment.
-- `api_hostname`: _Optional._ The hostname of the Cloud Controller in the Cloud Foundry deployment.
-- `api_ip`: _Optional._ The IP address of the Cloud Controller in the Cloud Foundry deployment.
+- **`api_hostname`: _Optional._ The full-qualified hostnames of api, login, and uaa (separated by whitespaces).**
+- **`api_ip`: _Optional._ The IP address of the Cloud Controller in the Cloud Foundry deployment.**
 - `username`: _Optional._ The username used to authenticate.
 - `password`: _Optional._ The password used to authenticate.
 - `origin`: _Optional._ The identity provider to be used for authentication (only valid for `username` & `password` authentication)
@@ -35,7 +36,7 @@ resources:
     type: cf-cli-resource
     source:
       api: https://api.local.pcfdev.io
-      api_hostname: api.local.pcfdev.io
+      api_hostname: api.local.pcfdev.io login.local.pcfdev.io uaa.local.pcfdev.io
       api_ip: 127.0.0.1
       username: admin
       password: admin
